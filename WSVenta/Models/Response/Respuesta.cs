@@ -14,5 +14,10 @@ namespace WSVenta.Models.Response
         public object Data { get; set; }
 
 
+        public Respuesta()
+        {
+            this.Exito = 0;
+
+        }
     }
 }
