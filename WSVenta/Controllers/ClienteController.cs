@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,11 @@ namespace WSVenta.Controllers
 {
     [Route("ruta/[controller]")]
     [ApiController]
+    //Autorizacion previo haber sido registrado en startup para el servicio, Necesita del token en POST para poder recibir los datos NO CONFUNDIR CON ENCRIPTADO SHA256
+    [Authorize]
     public class ClienteController : ControllerBase
     {
+        
         [HttpGet]
         public IActionResult Get()
         {
@@ -25,7 +29,7 @@ namespace WSVenta.Controllers
                 {
                     //Define la variable con solo igualarlo con un numero o un texto
                     //var lst = 1;
-                    var lst = db.Cliente.ToList();
+                    var lst = db.Cliente.OrderByDescending(d=>d.Id).ToList();
 
                     //Indica si el proceso es exitoso y registra en la clase ReSPONSE/rESPUESTA
                     oRespuesta.Exito = 1;
@@ -133,6 +137,7 @@ namespace WSVenta.Controllers
 
         }
 
-
+        
     }
+
 }

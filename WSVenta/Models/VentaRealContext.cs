@@ -22,6 +22,7 @@ namespace WSVenta.Models
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Concepto> Concepto { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Venta> Venta { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -43,7 +44,7 @@ namespace WSVenta.Models
 
                 entity.Property(e => e.Nombre)
                     .HasColumnName("nombre")
-                    .HasMaxLength(50)
+                    .HasMaxLength(300)
                     .IsUnicode(false);
             });
 
@@ -99,6 +100,28 @@ namespace WSVenta.Models
                 entity.Property(e => e.PrecioUnitario)
                     .HasColumnName("precioUnitario")
                     .HasColumnType("decimal(16, 2)");
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.ToTable("usuario");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Nombre)
+                    .HasColumnName("nombre")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Venta>(entity =>
